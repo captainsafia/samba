@@ -65,28 +65,14 @@ void initializeRobot() {
 
 task main() {
 	initializeRobot();
-
-	int servoThreshold = 30; // Avoid miniscule movements of controllers
-	int motorThreshold = 15;
-
-	int xValue, yValue; // Stores left analog stick values
-
-	float scaleFactor = 40.0/ 127; // Sets the maximum average motor power and maps range of analog stick to this power range
-
-
-
-	waitForStart();   // wait for start of tele-op phase
+	//waitForStart();   // wait for start of tele-op phase
 
 	while (true) {
 		getJoystickSettings(joystick); // Fetches the data from the joystick
-		xValue = joystick.joy1_x1;
-		yValue = joystick.joy1_y1;
+		nxtDisplayTextLine(3, "L=%d", joystick.joy1_y1);
+	  nxtDisplayTextLine(4, "R=%d", joystick.joy1_y2);
 
 		// Check if xValue and yValue are within the threshold if not set value to 0
-		if (abs(xValue) < motorThreshold) {
-			xValue = 0;
-		}
-		if (abs(yValue) < motorThreshold) {}
 
 	}
 }
