@@ -6,20 +6,98 @@
 
 #include "JoystickDriver.c"  //Include file to "handle" the Bluetooth messages.
 
-
-
 void initializeRobot() {
 	return;
 }
 
+void stopRobot() {
+	motor[motorA] = 0;
+	motor[motorB] = 0;
+	motor[motorC] = 0;
+	motor[motorD] = 0;
+}
+
+void moveForward(int duration) {
+	motor[motorA] = 50;
+	motor[motorD] = 50;
+	wait10Msec(duration / 0.01);
+	stopRobot();
+}
+
+void moveBackward(int duration) {
+	motor[motorA] = -50;
+	motor[motorD] = -50;
+	wait10Msec(duration / 0.01);
+	stopRobot();
+}
+
+void moveSideways(int duration) {
+	motor[motorB] = 50;
+	motor[motorC] = 50;
+	wait10Msec(duration / 0.01);
+	stopRobot();
+}
+
+void moveSidewaysReverse(int duration) {
+	motor[motorB] = -50;
+	motor[motorC] = -50;
+	wait10Msec(duration / 0.01);
+	stopRobot();
+}
+
+void turnLeft() {
+	motor[motorB] = 50;
+	motor[motorD] = 50;
+	motor[motorC] = -50;
+	motor[motorA] = -50;
+	wait10Msec(1/0.01);
+}
+
+void turnRight() {
+	motor[motorB] = -50;
+	motor[motorD] = -50;
+	motor[motorC] = 50;
+	motor[motorA] = 50;
+	wait10Msec(1/0.01);
+}
+
 task main() {
 	initializeRobot();
-	//waitForStart();   // wait for start of tele-op phase
-    
+
+	waitForStart();   // wait for start of tele-op phase
+
 	while (true) {
+
 		getJoystickSettings(joystick); // Fetches the data from the joystick
-		nxtDisplayTextLine(2, "Began working");
-		nxtDisplayTextLine(3, "L=%d", joystick.joy1_y1);
-        nxtDisplayTextLine(4, "R=%d", joystick.joy1_y2);
+
+		if (joy1Btn(1)) {
+			// turnLeft();
+		} else if (joy1Btn(3)) {
+			// turnRight();
+		}
+		nxtDisplayTextLine(2, "Top hat: %d", joystick.joy1_TopHat);
+
+		// Checks the value of the top_hat
+		// 	Range of 0-1: Up
+		//	2 is Right (do more testing to check for violatle)
+		// 	Range of 3-4: Down
+		// 	Range of 5-6: Left
+		//	Range of 7: Up
+
+		// Mapping to wheel motion
+		// 	Up : moveForward()
+		// 	Down: moveBackward()
+		// 	Left: moveSidewaysReverse()
+		// 	Right: moveSideways()
+
+		if (joystick.joy1_TopHat == 0 || joystick.joy1_TopHat == 1 || joystick.joy1_TopHat == 7) {
+			moveForward();
+		} else if (joystick.joy1_TopHat == 2) {
+			moveSideways();
+		} else if (joystick.joy1_TopHat == 3 || joystick.joy1_TopHat == 4) {
+			moveBackward();
+		} else if (joystick.joy1_TopHat == 5 || joystick.joy1_TopHat == 6) {
+			moveSidewaysReverse();
+		} else {}
 	}
 }
