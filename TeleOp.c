@@ -17,32 +17,24 @@ void stopRobot() {
 	motor[motorD] = 0;
 }
 
-void moveForward(int duration) {
+void moveForward() {
 	motor[motorA] = 50;
 	motor[motorD] = 50;
-	wait10Msec(duration / 0.01);
-	stopRobot();
 }
 
-void moveBackward(int duration) {
+void moveBackward() {
 	motor[motorA] = -50;
 	motor[motorD] = -50;
-	wait10Msec(duration / 0.01);
-	stopRobot();
 }
 
-void moveSideways(int duration) {
+void moveSideways() {
 	motor[motorB] = 50;
 	motor[motorC] = 50;
-	wait10Msec(duration / 0.01);
-	stopRobot();
 }
 
-void moveSidewaysReverse(int duration) {
+void moveSidewaysReverse() {
 	motor[motorB] = -50;
 	motor[motorC] = -50;
-	wait10Msec(duration / 0.01);
-	stopRobot();
 }
 
 void turnLeft() {
@@ -50,7 +42,6 @@ void turnLeft() {
 	motor[motorD] = 50;
 	motor[motorC] = -50;
 	motor[motorA] = -50;
-	wait10Msec(1/0.01);
 }
 
 void turnRight() {
@@ -58,7 +49,6 @@ void turnRight() {
 	motor[motorD] = -50;
 	motor[motorC] = 50;
 	motor[motorA] = 50;
-	wait10Msec(1/0.01);
 }
 
 task main() {
@@ -70,25 +60,25 @@ task main() {
 
 		getJoystickSettings(joystick); // Fetches the data from the joystick
 
-		if (joy1Btn(1)) {
-			// turnLeft();
-		} else if (joy1Btn(3)) {
-			// turnRight();
-		}
+
 		nxtDisplayTextLine(2, "Top hat: %d", joystick.joy1_TopHat);
 
-		// Checks the value of the top_hat
-		// 	Range of 0-1: Up
-		//	2 is Right (do more testing to check for violatle)
-		// 	Range of 3-4: Down
-		// 	Range of 5-6: Left
-		//	Range of 7: Up
+        /*
+            THE FOLLOWING CODE CONTROLS THE MOVEMENT OF THE WHEELS
+            NOT INCLUDING THE TURNS
+            Checks the value of the top_hat
+                Range of 0-1: Up
+                2 is Right (do more testing to check for violatle)
+                Range of 3-4: Down
+                Range of 5-6: Left
+                Range of 7: Up
 
-		// Mapping to wheel motion
-		// 	Up : moveForward()
-		// 	Down: moveBackward()
-		// 	Left: moveSidewaysReverse()
-		// 	Right: moveSideways()
+            Mapping to wheel motion
+                Up : moveForward()
+                Down: moveBackward()
+                Left: moveSidewaysReverse()
+                Right: moveSideways()
+         */
 
 		if (joystick.joy1_TopHat == 0 || joystick.joy1_TopHat == 1 || joystick.joy1_TopHat == 7) {
 			moveForward();
@@ -99,5 +89,20 @@ task main() {
 		} else if (joystick.joy1_TopHat == 5 || joystick.joy1_TopHat == 6) {
 			moveSidewaysReverse();
 		} else {}
+        
+        // THE FOLLOWING CODE CONTROLS THE TURNING OF THE ROBOT
+        
+        if (joy1Btn(1)) {
+			turnLeft();
+		} else if (joy1Btn(3)) {
+			turnRight();
+		}
+        
+        if (joystick.joy2_TopHat == 0 || joystick.joy2_TopHat == 1 || joystick.joy2_TopHat == 7) {
+            raiseArm();
+        } else if (joystick.joy2_TopHat == 3 || joystick.joy2_TopHat == 4) {
+            lowerArm();
+        } else {}
+        
 	}
 }
