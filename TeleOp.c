@@ -69,6 +69,11 @@ void raiseArm() {
 	motor[motorF] = 25;
 }
 
+void lowerArm() {
+	motor[motorE] = -25;
+	motor[motorF] = -25;
+}
+
 task main() {
 	initializeRobot();
 
@@ -114,12 +119,6 @@ task main() {
 			turnLeft();
 			} else if (joy1Btn(3)) {
 			turnRight();
-		}
-
-		if (joystick.joy2_TopHat == 0 || joystick.joy2_TopHat == 1 || joystick.joy2_TopHat == 7) {
-			raiseArm();
-			} else if (joystick.joy2_TopHat == 3 || joystick.joy2_TopHat == 4) {
-			lowerArm();
-		} else {}
+		} else if ()
 	}
 }
