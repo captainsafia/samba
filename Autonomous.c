@@ -91,6 +91,10 @@ void reverseArm() {
 
 /* Main method is the only method that the computer actually runs. You define the previous methods, but the computer doesn't run them by itself. */
 task main() {
+    initializeRobot();
+    waitForStart();	
+    
+    
 	/*
 	To use comment and uncomment each line as necessary and then run the program.
 	*/
