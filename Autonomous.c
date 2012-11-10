@@ -19,7 +19,6 @@
 /* Some comments made by Angie, as the driver during a pair programming session on 11/7/2012*/
 
 #include "JoystickDriver.c"	 //Include file to "handle" the Bluetooth messages.
-// #include "/drivers/HTIRS2-driver.h"
 
 
 void initializeRobot() {
@@ -92,8 +91,9 @@ void reverseArm() {
 
 /* Main method is the only method that the computer actually runs. You define the previous methods, but the computer doesn't run them by itself. */
 task main() {
-	//raiseArm();
-	  reverseArm();
-	nxtDisplayCenteredTextLine(0, "Running");
-	wait10Msec(5/0.01);
+	/*
+	To use comment and uncomment each line as necessary and then run the program.
+	*/
+	raiseArm();
+	reverseArm();
 }

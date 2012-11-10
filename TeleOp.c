@@ -103,7 +103,7 @@ task main() {
 		Right: moveSideways()
 		*/
 
-		if (joystick.joy1_TopHat == 0 || joystick.joy1_TopHat == 1 || joystick.joy1_TopHat == 7) {
+		if (joystick.joy1_TopHat == 1 || joystick.joy1_TopHat == 7) {
 			moveForward();
 			} else if (joystick.joy1_TopHat == 2) {
 			moveSideways();
@@ -119,6 +119,10 @@ task main() {
 			turnLeft();
 			} else if (joy1Btn(3)) {
 			turnRight();
-		} else if ()
+		} else if (joy1Btn(4)) {
+			raiseArm();
+		} else if (joy1Btn(2)) {
+			lowerArm();
+		}
 	}
 }
