@@ -1,13 +1,11 @@
 #pragma config(Hubs,  S1, HTMotor,  HTServo,  HTMotor,  HTMotor)
 #pragma config(Sensor, S1,     ,               sensorI2CMuxController)
 #pragma config(Sensor, S2,     IRSensor,       sensorI2CCustom)
-#pragma config(Sensor, S3,     touchBoolean1,  sensorTouch)
-#pragma config(Sensor, S4,     touchBoolean2,  sensorTouch)
 #pragma config(Motor,  mtr_S1_C1_1,     motorA,        tmotorTetrix, openLoop)
 #pragma config(Motor,  mtr_S1_C1_2,     motorB,        tmotorTetrix, openLoop)
 #pragma config(Motor,  mtr_S1_C3_1,     motorC,        tmotorTetrix, openLoop)
 #pragma config(Motor,  mtr_S1_C3_2,     motorD,        tmotorTetrix, openLoop, reversed)
-#pragma config(Motor,  mtr_S1_C4_1,     motorE,        tmotorTetrix, openLoop)
+#pragma config(Motor,  mtr_S1_C4_1,     motorE,        tmotorTetrix, openLoop, reversed)
 #pragma config(Motor,  mtr_S1_C4_2,     motorF,        tmotorTetrix, openLoop)
 #pragma config(Servo,  srvo_S1_C2_1,    servo1,               tServoNone)
 #pragma config(Servo,  srvo_S1_C2_2,    servo2,               tServoNone)
@@ -55,21 +53,31 @@ task main() {
 
 		// Robot movement
 		if (abs(joystick.joy1_y1)>10) {
-			motor[motorD] = joystick.joy1_y1;
+			motor[motorC] = joystick.joy1_y1;
 			motor[motorE] = joystick.joy1_y1;
 		}
-		if (abs(joystick.joy1_y2)>10) {
-			motor[motorC] = joystick.joy1_y2;
-			motor[motorF] = joystick.joy1_y2;
+		if (abs(joystick.joy1_x2)>10) {
+			motor[motorD] = joystick.joy1_x2;
+			motor[motorF] = joystick.joy1_x2;
 		}
 
 		// Arm movement
 		if (joystick.joy1_TopHat == 0) {
-			motor[motorA] = 12;
-			motor[motorB] = 12;
+			motor[motorA] = 17;
+			motor[motorB] = 17;
 		} else if (joystick.joy1_TopHat == 4) {
-			motor[motorA] =12;
-			motor[motorB] = 12;
+			motor[motorA] = -12;
+			motor[motorB] = -12;
+		}
+
+		// Halt all motors
+		if (joystick.joy1_Buttons == 1) {
+			motor[motorA] = 0;
+			motor[motorB] = 0;
+			motor[motorC] = 0;
+			motor[motorD] = 0;
+			motor[motorE] = 0;
+			motor[motorF] = 0;
 		}
 	}
 }
