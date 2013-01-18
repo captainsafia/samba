@@ -17,6 +17,17 @@ void initializeRobot() {
   return;
 }
 
+int scaleForMotor(int joystickValue) {
+	const int MAX_MOTOR_VALUE = 100;
+	const float MAX_JOYSTICK_VALUE = 127.0;
+
+	float ratio = joystickValue / MAX_JOYSTICK_VALUE;
+	int scaledValue = ratio * MAX_MOTOR_VALUE;
+
+	return scaledValue;
+
+}
+
 task main() {
   initializeRobot();
 
@@ -26,13 +37,13 @@ task main() {
   	getJoystickSettings(joystick);
 
 	if (abs(joystick.joy1_y1) > 10) {
-		motor[frontLeft] = 50;
-		motor[rearLeft] = 50;
+		motor[frontLeft] = scaleForMotor(joystick.joy1_y1);
+		motor[rearLeft] = scaleForMotor(joystick.joy1_y1);
 	}
 
 	if (abs(joystick.joy1_y2) > 10) {
-		motor[frontRight] = 50;
-		motor[rearRight] = 50;
+		motor[frontRight] = scaleForMotor(joystick.joy1_y2);
+		motor[rearRight] = scaleForMotor(joystick.joy1_y2);
 	}
 
 	if (joystick.joy1_TopHat == 0) {
