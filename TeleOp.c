@@ -23,5 +23,26 @@ task main() {
   waitForStart();   // wait for start of tele-op phase
 
   while (true) {
+  	getJoystickSettings(joystick);
+
+	if (abs(joystick.joy1_y1) > 10) {
+		motor[frontLeft] = 50;
+		motor[rearLeft] = 50;
+	}
+
+	if (abs(joystick.joy1_y2) > 10) {
+		motor[frontRight] = 50;
+		motor[rearRight] = 50;
+	}
+
+	if (joystick.joy1_TopHat == 0) {
+		motor[armRight] = 17;
+		motor[armLeft] = 17;
+	}
+
+	if (joystick.joy1_TopHat == 4) {
+		motor[armRight] = -12;
+		motor[armLeft] = -12;
+	}
   }
 }
