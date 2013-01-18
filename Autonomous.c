@@ -10,6 +10,17 @@
 
 #include "JoystickDriver.c"  //Include file to "handle" the Bluetooth messages.
 
+// Directional values for DC and AC
+int _dirDC = 0;
+int _dirAC = 0;
+
+// DC and AC values from 5 detectors
+int dcS1, dcS2, dcS3, dcS4, dcS5 = 0;
+int acS1, acS2, acS3, acS4, acS5 = 0;
+
+// Set sesnsor to recognize 1200 Hz pulse
+tHTIRS2DSPMode _mode = DSP_1200;
+
 void initializeRobot() {
   // Place code here to sinitialize servos to starting positions.
   // Sensors are automatically configured and setup by ROBOTC. They may need a brief time to stabilize.
@@ -17,6 +28,20 @@ void initializeRobot() {
   return;
 }
 
+void displayIRData() {
+  // Set the sensor mode, if unsucessful throw error
+  if (tHTIRS2DSPMode(IRSensor, _mode) == 0) {
+    eraseDisplay();
+    nxtDisplayCenteredTextLine(0, "ERROR!");
+    nxtDisplayCenteredTextLine(2, "Init failed!");
+    nxtDisplayCenteredTextLine(3, "Connect sensor");
+    nxtDisplayCenteredTextLine(4, "to Port 1.");
+    
+    PlaySound(soundBeepBeep);
+    wait10Msec(300);
+    return;
+  }
+}
 
 task main() {
   initializeRobot();
