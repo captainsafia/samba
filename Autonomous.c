@@ -20,7 +20,13 @@ int dcS1, dcS2, dcS3, dcS4, dcS5 = 0;
 int acS1, acS2, acS3, acS4, acS5 = 0;
 
 // Set sesnsor to recognize 1200 Hz pulse
-//tHTIRS2DSPMode _mode = DSP_1200;
+tHTIRS2DSPMode _mode = DSP_1200;
+
+// Array of strings to keep track of changes 
+string sTextLines[8];
+
+// displayText function prototype
+void displayText(int nLineNumber, string cChar, int nValueDC, int nValueAC);
 
 void initializeRobot() {
   // Place code here to sinitialize servos to starting positions.
@@ -77,6 +83,20 @@ void displayIRData() {
       wait10Msec(5);
     }
   }
+}
+
+void displayText(int nLineNumber, string cChar, int nValueDC, int nValueAC) {
+  string sTemp;
+  StringFormat(sTemp, "%4d  %4d", nValueDC, nValueAC);
+  // Check if the new line is the same as the previous one
+  // Only update screen if it's different.
+  if (sTemp != sTextLines[nLineNumber]) {
+    string sTemp2;
+    sTextLines[nLineNumber] = sTemp;
+    StringFormat(sTemp2, "%s:  %s", cChar, sTemp);
+    nxtDisplayTextLine(nLineNumber, sTemp2);
+  }
+}
 
 task main() {
   initializeRobot();
