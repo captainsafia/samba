@@ -58,30 +58,29 @@ void displayIRData() {
   nxtDisplayTextLine(1, "-----------------");
   
   while (true) {
-      _dirDC = HTIRS2readDCDir(HTIRS2);
-      if (_dirDC < 0) {
-        break;
-      }
-      _dirAC = HTIRS2readACDir(HTIRS2);
-      if (_dirAC < 0) {
-        break;
-      }
-      
-      if (!HTIRS2readAllDCStrength(HTIRS2, dcS1, dcS2, dcS3, dcS4, dcS5)) {
-        break;
-      }
-      if (!HTIRS2readAllACStrength(HTIRS2, acS1, acS2, acS3, acS4, acS5)) {
-        break;
-      }
-      displayText(2, "D", _dirDC, _dirAC);
-      displayText(3, "0", dcS1, acS1);
-      displayText(4, "1", dcS2, acS2);
-      displayText(5, "2", dcS3, acS3);
-      displayText(6, "3", dcS4, acS4);
-      displayText(7, "4", dcS5, acS5);
-      
-      wait10Msec(5);
+    _dirDC = HTIRS2readDCDir(HTIRS2);
+    if (_dirDC < 0) {
+      break;
     }
+    _dirAC = HTIRS2readACDir(HTIRS2);
+    if (_dirAC < 0) {
+      break;
+    }
+
+    if (!HTIRS2readAllDCStrength(HTIRS2, dcS1, dcS2, dcS3, dcS4, dcS5)) {
+      break;
+    }
+    if (!HTIRS2readAllACStrength(HTIRS2, acS1, acS2, acS3, acS4, acS5)) {
+      break;
+    }
+    displayText(2, "D", _dirDC, _dirAC);
+    displayText(3, "0", dcS1, acS1);
+    displayText(4, "1", dcS2, acS2);
+    displayText(5, "2", dcS3, acS3);
+    displayText(6, "3", dcS4, acS4);
+    displayText(7, "4", dcS5, acS5);
+
+    wait10Msec(5);
   }
 }
 
